@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block title %}Q1{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  $(document).ready(function () {
+    var shipCount = JSON.parse('{{shipCount | safe}}');
+    var cohortData = eval('{{cohortData | safe}}');
+    var most3 = eval('{{most3 | safe}}');
+    drawPie(shipCount);
+    drawCohort('{{minDate}}', cohortData);
+    drawMost3(most3);
+  });
+
+  function drawPie(shipCount) {
+    var pieSeries = [];
+    for (var s in shipCount) {
+      pieSeries.push({
+        name: s,
+        y: shipCount[s]
+      });
+    }
+
+    Highcharts.chart('chart', {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+      },
+      title: {
+        text: '免運 & 運費 圓餅圖'
+      },
+      tooltip: {
+        pointFormat: '<b>{point.y} ({point.percentage:.1f}%)</b>'
+      },
+      credits: {
+        enabled: false
+      },
+      plotOptions: {
+        pie: {
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: true,
+            format: '<b>{point.name}</b>:{point.y} ({point.percentage:.1f}%)',
+            style: {
+              color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+              fontSize: '20px'
+            }
+          }
+        }
+      },
+      series: [{
+        name: '',
+        colorByPoint: true,
+        data: pieSeries
+      }]
+    });
+  }
+
+  function drawCohort(startDate, cohortData) {
+    // The initial date is the date displayed
+    // in the first column of the first row
+    initialDate = new Date(startDate);
+
+    // DOM Element where the Cohort Chart will be inserted
+    container = document.getElementById('cohort');
+
+    Cornelius.draw({
+      initialDate: initialDate,
+      timeInterval: 'daily',
+      container: container,
+      cohort: cohortData,
+      title: '使用者與下訂Cohort'
+    });
+  }
+
+  function drawMost3(most3) {
+    Highcharts.chart('most3', {
+      chart: {
+        type: 'bar'
+      },
+      title: {
+        text: '最受歡迎3個商品'
+      },
+      xAxis: {
+        categories: [most3[0][0], most3[1][0], most3[2][0]],
+        title: {
+          text: null
+        }
+      },
+      yAxis: {
+        min: 0,
+        labels: {
+          overflow: 'justify'
+        },
+        title: {
+          text: "數量"
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        data: [most3[0][1], most3[1][1], most3[2][1]],
+        showInLegend: false
+      }]
+    });
+  }
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <div id="chart"></div>
+  </div>
+  <div class="col-md-12">
+    <div id="cohort"></div>
+  </div>
+  <div class="col-md-12">
+    <div id="most3"></div>
+  </div>
+</div>
+{% endblock %}

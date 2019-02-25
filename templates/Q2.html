@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Q2{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12 text-center">
+      <div>開啟Q2 jupyter notebook，密碼：1234</div>
+      <div>第一次執行時會稍微久一點</div>
+      <h5><a target="_blank" href="https://morningshop-notebook.herokuapp.com/notebooks/Q2.ipynb">https://morningshop-notebook.herokuapp.com/notebooks/Q2.ipynb</a></h5>
+
+      <div class="col-md-12">
+          <img src="{% static 'images/Q2.png' %}"></img>
+      </div>
+  </div>
+</div>
+{% endblock %}

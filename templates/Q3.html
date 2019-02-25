@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Q3{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+      <h5>在python3.7的環境測試，兩者的結果是一樣</h5>
+    </div>
+    <div class="col-md-6">
+      <img src="{% static 'images/Q3_PHP.png' %}"></img>
+    </div>
+    <div class="col-md-6">
+      <img src="{% static 'images/Q3_python3.png' %}"></img>
+    </div>
+
+    <hr>
+    <div class="col-md-6">
+      <div class="col-md-12">
+          <h5>如果在python2要題目的考題的話</h5>
+      </div>
+      <div class="col-md-12">
+          <img src="{% static 'images/Q3_python2.7.png' %}"></img>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="col-md-12">
+        <h5>另外這裡有解釋3.6+以後的版本，Dict已經是order</h5>
+      </div>
+      <div class="col-md-12">
+          <img src="{% static 'images/Q3_python3.6+.png' %}"></img>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+{% endblock %}
